@@ -106,6 +106,8 @@ void node:: deleteNode(){
 }
 
 void node:: sortList(){
+
+	int temp;
 	
 	cout<<"Your list is sorted(bubble sort used)"<<endl;
 	
@@ -115,21 +117,21 @@ void node:: sortList(){
 		t1 = t->address;		//t1 takes the address of the next node
 		while(t1->address != NULL){		//t1 will traverse the whole list
 			if(t->data > t1->data){		//previous data found larger than the subsequet data
-				int temp;
+				temp;
 				temp = t1->data;				// swapping
 				t1->data = t->data;					// performed
 				t->data = temp;								// here 
 			}
 
-			if(t1->address == NULL && t->data > t1->data){	//corner case for the last node handled
-			int temp = t1->data;
-			t1->data = t->data;
-			t->data = temp;
-			}
-
 			t1 = t1->address;		//t1 will go one node further
 		
 		}
+
+		if(t1->address == NULL && t->data > t1->data){	//corner case for the last node handled
+				temp = t1->data;
+				t1->data = t->data;
+				t->data = temp;
+			}
 		
 		t = t->address;				//t will go one node further
 	}
@@ -165,7 +167,7 @@ void node:: addElement(){
 		else if (t->address == NULL && t->data == key)
 		{
 			t->address = new_node;
-			new_node->data = key;
+			new_node->data = item;
 			new_node->address = NULL;
 
 			cout<<"New node is successfully added!!"<<endl;
