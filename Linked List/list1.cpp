@@ -18,7 +18,7 @@ node *start=NULL;     //global variable
 
 node* node:: createNode(){		//function returns a pointer of node type
 	node *temp;
-	temp=new node();	//will assign a new memory and store its address in temp pointer
+	temp = new node();	//will assign a new memory and store its address in temp pointer
 	return temp;
 }
 
@@ -109,28 +109,29 @@ void node:: sortList(){
 	
 	cout<<"Your list is sorted(bubble sort used)"<<endl;
 	
-	node *t = start;
-	node *t1;
-	while(t->address != NULL){
-		t1 = t->address;
-		while(t1->address != NULL){
-			if(t->data > t1->data){
+	node *t = start;		//pointer to the first node
+	node *t1;				//pointer to keep record of the node next to the current node
+	while(t->address != NULL){	//t will traverse till the last node(init with header node)
+		t1 = t->address;		//t1 takes the address of the next node
+		while(t1->address != NULL){		//t1 will traverse the whole list
+			if(t->data > t1->data){		//previous data found larger than the subsequet data
 				int temp;
-				temp = t1->data;
-				t1->data = t->data;
-				t->data = temp;
+				temp = t1->data;				// swapping
+				t1->data = t->data;					// performed
+				t->data = temp;								// here 
 			}
-				
-			t1 = t1->address;
-		}
-		
-		if(t1->address == NULL){
+
+			if(t1->address == NULL && t->data > t1->data){	//corner case for the last node handled
 			int temp = t1->data;
 			t1->data = t->data;
 			t->data = temp;
+			}
+
+			t1 = t1->address;		//t1 will go one node further
+		
 		}
 		
-		t = t->address;
+		t = t->address;				//t will go one node further
 	}
 	
 }
