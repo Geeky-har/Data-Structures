@@ -11,7 +11,8 @@ class node{			//node datatype consists of int and a pointer of another node.
 		void printList();
 		void deleteNode();
 		void sortList();
-		void addElement();	
+		void addElement();
+		void addElementBeg();	
 };
 
 node *start=NULL;     //global variable
@@ -185,6 +186,29 @@ void node:: addElement(){
 	}
 }
 
+void node:: addElementBeg(){
+	int data;
+	node* newNode, *temp;
+	cout<<"Enter the data you want to add in the first node: "<<endl;
+	cin>>data;
+
+	newNode = createNode();
+	newNode->data = data;
+
+	if(start == NULL){
+		start = newNode;
+		newNode->address = NULL;
+	}
+
+	else{
+		temp = start;
+		start = newNode;
+		newNode->address = temp;
+	}
+
+	cout<<endl<<"Your node successfuly inserted in the beginning"<<endl;
+}
+
 int main(){
 	int option;
 	node ob1;
@@ -197,8 +221,9 @@ int main(){
 		cout<<"2. Print a List "<<endl;
 		cout<<"3. Delete a Node"<<endl;
 		cout<<"4. To Perform sorting"<<endl;
-		cout<<"5. To add an item after an existing node"<<endl;
-		cout<<"6. Exit "<<endl;
+		cout<<"5. To add a node after an existing node"<<endl;
+		cout<<"6. To add an item right after the header(i.e in the beginning)"<<endl;
+		cout<<"7. Exit "<<endl;
 		cin>>option;
 		
 		switch(option){
@@ -216,10 +241,13 @@ int main(){
 
 			case 5 : ob1.addElement();
 					 break;
+
+			case 6 : ob1.addElementBeg();
+					 break;
 					 
 		}
 		
-	}while(option!=6);
+	}while(option!=7);
 	
 	return 0;
 }

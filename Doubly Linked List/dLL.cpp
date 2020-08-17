@@ -46,7 +46,6 @@ void DeNode::insertNode(){
 
             traverse->next = node;
             node->prev = traverse;
-            
         }
 
         cin>>item;
@@ -96,8 +95,7 @@ int main(){
 					 break;
 			
 			case 2 : obj.printNode();
-					 break;
-					 
+					 break;	 
 		}
 		
 	}while(option!=3);
