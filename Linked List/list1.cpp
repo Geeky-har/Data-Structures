@@ -8,11 +8,12 @@ class node{			//node datatype consists of int and a pointer of another node.
 	public:
 		node* createNode();
 		void insertNode();
-		void printList();
-		void deleteNode();
-		void sortList();
-		void addElement();
+		void printList();			//  declaration
+		void deleteNode();			//		of all
+		void sortList();			//			the functions
+		void addElement();			//             used in the program
 		void addElementBeg();	
+		void searchEle();
 };
 
 node *start=NULL;     //global variable
@@ -110,31 +111,39 @@ void node:: sortList(){
 
 	int temp;
 	
-	cout<<"Your list is sorted(bubble sort used)"<<endl;
-	
 	node *t = start;		//pointer to the first node
 	node *t1;				//pointer to keep record of the node next to the current node
-	while(t->address != NULL){	//t will traverse till the last node(init with header node)
-		t1 = t->address;		//t1 takes the address of the next node
-		while(t1->address != NULL){		//t1 will traverse the whole list
-			if(t->data > t1->data){		//previous data found larger than the subsequet data
-				temp;
-				temp = t1->data;				// swapping
-				t1->data = t->data;					// performed
-				t->data = temp;								// here 
+
+	if (t == NULL)
+	{
+		cout<<"Please create a list first (press 1)"<<endl;
+	}
+
+	else{
+		cout<<"Your list is sorted(bubble sort used)"<<endl;
+
+		while(t->address != NULL){	//t will traverse till the last node(init with header node)
+			t1 = t->address;		//t1 takes the address of the next node
+			while(t1->address != NULL){		//t1 will traverse the whole list
+				if(t->data > t1->data){		//previous data found larger than the subsequet data
+					// temp;
+					temp = t1->data;				// swapping
+					t1->data = t->data;					// performed
+					t->data = temp;								// here 
+				}
+
+				t1 = t1->address;		//t1 will go one node further
+			
 			}
 
-			t1 = t1->address;		//t1 will go one node further
-		
+			if(t1->address == NULL && t->data > t1->data){	//corner case for the last node handled
+					temp = t1->data;
+					t1->data = t->data;
+					t->data = temp;
+				}
+			
+			t = t->address;				//t will go one node further
 		}
-
-		if(t1->address == NULL && t->data > t1->data){	//corner case for the last node handled
-				temp = t1->data;
-				t1->data = t->data;
-				t->data = temp;
-			}
-		
-		t = t->address;				//t will go one node further
 	}
 	
 }
@@ -209,6 +218,33 @@ void node:: addElementBeg(){
 	cout<<endl<<"Your node successfuly inserted in the beginning"<<endl;
 }
 
+void node:: searchEle(){
+	int key_element, count = 0;
+	node* t = start;
+
+	if(t == NULL)
+		cout<<"List Not found please create a list first!!!";
+
+	else{
+		cout<<"Enter the element you want to search: "<<endl;
+		cin>>key_element;
+
+		while(t != NULL){
+			count++;
+
+			if(t->data == key_element){
+				cout<<"Element is found at position"<<count;
+				break;
+			}
+
+			t = t->address;
+		}
+
+		if (t == NULL)
+			cout<<"The key you entered is not present in the list"<<endl;
+	}
+}
+
 int main(){
 	int option;
 	node ob1;
@@ -223,7 +259,8 @@ int main(){
 		cout<<"4. To Perform sorting"<<endl;
 		cout<<"5. To add a node after an existing node"<<endl;
 		cout<<"6. To add an item right after the header(i.e in the beginning)"<<endl;
-		cout<<"7. Exit "<<endl;
+		cout<<"7. To Perform Searching Operation"<<endl;
+		cout<<"8. Exit "<<endl;
 		cin>>option;
 		
 		switch(option){
@@ -244,10 +281,13 @@ int main(){
 
 			case 6 : ob1.addElementBeg();
 					 break;
+
+			case 7 : ob1.searchEle();
+					 break;
 					 
 		}
 		
-	}while(option!=7);
+	}while(option!=8);
 	
 	return 0;
 }

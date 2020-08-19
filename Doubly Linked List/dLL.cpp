@@ -1,3 +1,11 @@
+/*
+
+ The double linked list is similar to the single list the only difference between both of them
+is that, each node in the doubly list contains the address of both its previous and next node...
+The implementation is almost the same however the contents of the class(or struct) will change
+
+*/
+
 #include<iostream>
 using namespace std;
 

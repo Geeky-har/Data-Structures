@@ -1,6 +1,6 @@
 #include<iostream>
-#include<conio.h>
 using namespace std;
+
 void insert(int a[], int n){
 	for(int i=1;i<n;i++){
 		int temp=a[i];
@@ -11,7 +11,7 @@ void insert(int a[], int n){
 			}
 		a[j+1]=temp;
 	}
-	cout<<"\n \n The sorted array is: \n";
+	cout<<"\n \nThe sorted array is: \n";
 	for(int m=0;m<n;m++){
 		cout<<a[m]<<" ";
 	}
