@@ -18,6 +18,7 @@ class DeNode{
         DeNode* createNode();
         void insertNode();
         void printNode();
+        void addNode();
 };
 
 DeNode* Start = nullptr;
@@ -85,6 +86,58 @@ void DeNode::printNode(){
     
 }
 
+void DeNode:: addNode(){
+    int data, key;
+    DeNode* traverse = Start, *new_node;
+
+    if (traverse == nullptr)
+    {
+        cout<<"List not found. Create a list first"<<endl;
+    }
+
+    else{
+        cout<<"Enter the element after which you want to add the new node: "<<endl;
+        cin>>key;
+
+        cout<<"Now enter the data of the new node: "<<endl;
+        cin>>data;
+
+        while (traverse->next != nullptr && traverse->data != key)
+        {
+            traverse = traverse->next;
+        }
+
+        if (traverse->next == nullptr && traverse->data != key)
+        {
+            cout<<"The key you entered is not present in the list"<<endl;
+        }
+
+        else if(traverse->next == nullptr && traverse->data == key){
+            new_node = createNode();
+            new_node->data = data;
+            traverse->next = new_node;
+            new_node->prev = traverse;
+            new_node->next = nullptr;
+
+            cout<<"New node successfullly added"<<endl;
+        }
+
+        else
+        {
+            DeNode* temp;
+            new_node = createNode();
+            new_node->data = data;
+            temp = traverse->next;
+            traverse->next = new_node;
+            new_node->prev = traverse;
+            new_node->next = temp;
+
+            cout<<"New node successfullly added"<<endl;
+        }
+    }
+
+}
+
 int main(){
     int option;
     DeNode obj;
@@ -92,10 +145,11 @@ int main(){
     cout<<"Select any option from the given menu!!"<<endl<<endl;
 
     do{
-		cout<<"\n\n****************************Main Menu****************************"<<endl;
+		cout<<"\n****************************Main Menu****************************"<<endl;
 		cout<<"1. Create a List "<<endl;
 		cout<<"2. Print a List "<<endl;
-		cout<<"3. Exit "<<endl;
+		cout<<"3. Add a node in the list after a element "<<endl;
+		cout<<"4. Exit "<<endl;
 		cin>>option;
 
         switch(option){
@@ -103,10 +157,13 @@ int main(){
 					 break;
 			
 			case 2 : obj.printNode();
+					 break;
+
+			case 3 : obj.addNode();
 					 break;	 
 		}
 		
-	}while(option!=3);
+	}while(option!=4);
 
     return 0;
 }
