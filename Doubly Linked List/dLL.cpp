@@ -19,6 +19,7 @@ class DeNode{
         void insertNode();
         void printNode();
         void addNode();
+        void deleteNode();
 };
 
 DeNode* Start = nullptr;
@@ -138,6 +139,45 @@ void DeNode:: addNode(){
 
 }
 
+void DeNode::deleteNode(){
+    DeNode* traverse = Start;
+    int key;
+
+    if(traverse == nullptr)     cout<<"List not found"<<endl;
+
+    else{
+        cout<<"Enter the value of the node which you want to delete: "<<endl;
+        cin>>key;
+
+        while (traverse->next != nullptr && traverse->data != key)
+        {
+            traverse = traverse->next;
+        }
+
+        if(traverse->next == nullptr && traverse->data != key){
+            cout<<"The value you entered is not present in the list!"<<endl;
+        }
+
+        else if (traverse->next == nullptr && traverse->data == key)
+        {
+            traverse->prev->next = nullptr;
+            delete(traverse);
+
+            cout<<"Item Successfully deleted from the list!"<<endl;
+        }
+
+        else
+        {
+            traverse->prev->next = traverse->next;
+            traverse->next->prev = traverse->prev;
+            delete(traverse);
+
+            cout<<"Item Successfully deleted from the list!"<<endl;
+        }
+        
+    }
+}
+
 int main(){
     int option;
     DeNode obj;
@@ -149,7 +189,8 @@ int main(){
 		cout<<"1. Create a List "<<endl;
 		cout<<"2. Print a List "<<endl;
 		cout<<"3. Add a node in the list after a element "<<endl;
-		cout<<"4. Exit "<<endl;
+        cout<<"4. To delete an existing node"<<endl;
+		cout<<"5. Exit "<<endl;
 		cin>>option;
 
         switch(option){
@@ -160,10 +201,13 @@ int main(){
 					 break;
 
 			case 3 : obj.addNode();
+					 break;	
+
+			case 4 : obj.deleteNode();
 					 break;	 
 		}
 		
-	}while(option!=4);
+	}while(option!=5);
 
     return 0;
 }
