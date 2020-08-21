@@ -14,6 +14,7 @@ class node{			//node datatype consists of int and a pointer of another node.
 		void addElement();			//             used in the program
 		void addElementBeg();	
 		void searchEle();
+		void revList();
 };
 
 node *start=NULL;     //global variable
@@ -245,6 +246,32 @@ void node:: searchEle(){
 	}
 }
 
+void node:: revList(){
+	node *t1, *t2, *trav;
+	t1 = t2 = NULL;
+
+	if (start == NULL)
+	{
+		cout<<"Enter some elements in the list first!!"<<endl;
+	}
+	
+	else{
+		while (start != NULL){
+
+			t2 = start->address;
+			start->address = t1;
+			t1 = start;
+			start = t2;
+		}
+
+		start = t1;
+
+		cout<<"Your linked list has been reversed successfully!!"<<endl;
+
+	}
+	
+}
+
 int main(){
 	int option;
 	node ob1;
@@ -260,7 +287,9 @@ int main(){
 		cout<<"5. To add a node after an existing node"<<endl;
 		cout<<"6. To add an item right after the header(i.e in the beginning)"<<endl;
 		cout<<"7. To Perform Searching Operation"<<endl;
-		cout<<"8. Exit "<<endl;
+		cout<<"8. To Reverse the List"<<endl;
+		cout<<"10. Delete the whole List"<<endl;
+		cout<<"9. Exit "<<endl;
 		cin>>option;
 		
 		switch(option){
@@ -284,10 +313,13 @@ int main(){
 
 			case 7 : ob1.searchEle();
 					 break;
+
+			case 8 : ob1.revList();
+					 break;
 					 
 		}
 		
-	}while(option!=8);
+	}while(option!=9);
 	
 	return 0;
 }
