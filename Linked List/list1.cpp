@@ -15,6 +15,7 @@ class node{			//node datatype consists of int and a pointer of another node.
 		void addElementBeg();	
 		void searchEle();
 		void revList();
+		void delList();
 };
 
 node *start=NULL;     //global variable
@@ -59,13 +60,15 @@ void node:: printList(){
 		cout<<"First Enter the elements in the list to perform print operation!!"<<endl;
 	}
 	
-	
-	while(traverse->address!=NULL){		//start a loop till node address is not null
+	else
+	{
+		while(traverse->address!=NULL){		//start a loop till node address is not null
 		cout<<traverse->data<<" -> ";
 		traverse=traverse->address;
+		}
+		if(traverse->address==NULL)			//corner case handled
+			cout<<traverse->data<<" ";
 	}
-	if(traverse->address==NULL)			//corner case handled
-		cout<<traverse->data<<" ";
 }
 
 void node:: deleteNode(){
@@ -272,14 +275,38 @@ void node:: revList(){
 	
 }
 
+void node:: delList(){
+	node *current, *t1;
+
+	current = start;
+	
+	if(current == NULL)		cout<<"No LIst exists"<<endl;
+
+	else
+	{
+		while (current != NULL)
+		{
+			t1 = current->address;
+			free(current);
+			current = t1;
+		}
+
+		start = NULL;
+
+		cout<<"Your List is Successfully deleted"<<endl;
+		
+	}
+	
+}
+
 int main(){
 	int option;
 	node ob1;
 	
-	cout<<"Select any option from the given menu!!"<<endl<<endl;
+	cout<<"Select any option from the given menu!!"<<endl;
 	
 	do{
-		cout<<"\n\n****************************Main Menu****************************"<<endl;
+		cout<<"\n****************************Main Menu****************************"<<endl<<endl;
 		cout<<"1. Create a List "<<endl;
 		cout<<"2. Print a List "<<endl;
 		cout<<"3. Delete a Node"<<endl;
@@ -288,8 +315,8 @@ int main(){
 		cout<<"6. To add an item right after the header(i.e in the beginning)"<<endl;
 		cout<<"7. To Perform Searching Operation"<<endl;
 		cout<<"8. To Reverse the List"<<endl;
-		cout<<"10. Delete the whole List"<<endl;
-		cout<<"9. Exit "<<endl;
+		cout<<"9. Delete the whole List"<<endl;
+		cout<<"10. Exit "<<endl;
 		cin>>option;
 		
 		switch(option){
@@ -316,10 +343,13 @@ int main(){
 
 			case 8 : ob1.revList();
 					 break;
+
+			case 9 : ob1.delList();
+					 break;
 					 
 		}
 		
-	}while(option!=9);
+	}while(option!=10);
 	
 	return 0;
 }
