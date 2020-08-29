@@ -4,6 +4,8 @@ such a way that smaller disc should always lie above the larger disc.
 Here I will be writing the code for the classic problem of tower of Hanoi.
 */
 
+/* here in the below function, A represents initial Tower, B represents auxiliary tower, C represents destination tower */
+
 #include<iostream>
 using namespace std;
 
