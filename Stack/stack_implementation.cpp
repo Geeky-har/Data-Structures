@@ -1,14 +1,23 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct ArrayStack{
+class ArrayStack{
 	int top;
 	int size;
 	int *array;
+
+	public:
+		ArrayStack* CreateStack();
+		int isFull(ArrayStack*);
+		int isEmpty(ArrayStack*);
+		void push(ArrayStack*);
+		void pop(ArrayStack*);
+		void printStack(ArrayStack*);
+
 };
 
 
-struct ArrayStack* CreateStack(){
+ArrayStack* ArrayStack:: CreateStack(){
 	struct ArrayStack *stack = new struct ArrayStack;
 	int n;
 	cout<<"Please Enter the size of the stack: "<<endl;
@@ -23,7 +32,7 @@ struct ArrayStack* CreateStack(){
 	return(stack);
 }
 
-int isFull(struct ArrayStack *stack){
+int ArrayStack:: isFull(ArrayStack *stack){
 	
 	if(stack->top == stack->size-1)
 		return(1);
@@ -32,7 +41,7 @@ int isFull(struct ArrayStack *stack){
 		return(0);
 }
 
-int isEmpty(struct ArrayStack *stack){
+int ArrayStack:: isEmpty(ArrayStack *stack){
 	
 	if(stack->top == -1)
 		return(1);
@@ -40,7 +49,7 @@ int isEmpty(struct ArrayStack *stack){
 	return(0);
 }
 
-void push(struct ArrayStack *stack){
+void ArrayStack:: push(ArrayStack *stack){
 	int item;
 	
 	if(!isFull(stack)){
@@ -56,7 +65,7 @@ void push(struct ArrayStack *stack){
 		cout<<"The stack is full (overflow condition!!)"<<endl;
 }
 
-void pop(struct ArrayStack *stack){
+void ArrayStack:: pop(ArrayStack *stack){
 	int temp;
 	
 	if(!isEmpty(stack)){
@@ -70,7 +79,7 @@ void pop(struct ArrayStack *stack){
 	
 }
 
-void printStack(struct ArrayStack *stack){
+void  ArrayStack:: printStack(ArrayStack *stack){
 	int i;
 	if(isEmpty(stack)){
 		cout<<"The stack is empty, please perform push operation"<<endl;
@@ -88,7 +97,8 @@ void printStack(struct ArrayStack *stack){
 
 int main(){
 	int option;
-	struct ArrayStack *stack;
+	ArrayStack obj;
+	ArrayStack *stack;
 	cout<<"Please select an option from below: "<<endl<<endl;
 	
 	do{
@@ -101,16 +111,16 @@ int main(){
 		cin>>option;
 		
 		switch(option){
-			case 1: stack = CreateStack();
+			case 1: stack = obj.CreateStack();
 					break;
 						
-			case 2: push(stack);
+			case 2: obj.push(stack);
 					break;
 						
-			case 3: pop(stack);
+			case 3: obj.pop(stack);
 					break;
 						
-			case 4: printStack(stack);
+			case 4: obj.printStack(stack);
 					break;
 		}
 			
