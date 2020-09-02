@@ -74,45 +74,41 @@ void node:: printList(){
 void node:: deleteNode(){
 	int key;
 	node *ptr, *ptr1;
+	cout<<"Enter the element you want to delete: "<<endl;
+	cin>>key;		//wil input the key from the user
 
 	ptr = start;		//init the ptr with address of teh header node
 	ptr1 = NULL;		//init the next ptr with null
-	
 	if(ptr == NULL)
 		cout<<"Your list is empty, do some insertion first!!"<<endl;
 
+	else if(ptr->data == key){		//if key found at the very first node
+		start = ptr->address;		//set header node with the address of the key node
+	}
+		
 	else{
-		cout<<"Enter the element you want to delete: "<<endl;
-		cin>>key;		//wil input the key from the user
-
-		if(ptr->data == key){		//if key found at the very first node
-			start = ptr->address;		//set header node with the address of the key node
+		
+		while(ptr->address != NULL && ptr->data != key){	//iterate till the condition specified
+			ptr1 = ptr;
+			ptr = ptr->address;
+		}
+		
+		if(ptr->data != key)
+			cout<<"The element is not present here!!"<<endl;
+			
+		else if(ptr->address == NULL && ptr->data == key){		// key found at the last node
+			ptr1->address = NULL;							// set previous node to null
+			delete(ptr);	
 		}
 			
 		else{
-			
-			while(ptr->address != NULL && ptr->data != key){	//iterate till the condition specified
-				ptr1 = ptr;
-				ptr = ptr->address;
-			}
-			
-			if(ptr->data != key)
-				cout<<"The element is not present here!!"<<endl;
-				
-			else if(ptr->address == NULL && ptr->data == key){		// key found at the last node
-				ptr1->address = NULL;							// set previous node to null
-				delete(ptr);	
-			}
-				
-			else{
-				ptr1->address = ptr->address;		// setting address contained by the prev node
-				delete(ptr);						// to address holded by key node
-			}
+			ptr1->address = ptr->address;		// setting address contained by the prev node
+			delete(ptr);						// to address holded by key node
 		}
-		
-		cout<<"Your List after the deletion Operation is: "<<endl;
-		printList();
 	}
+	
+	cout<<"Your List after the deletion Operation is: "<<endl;
+	printList();
 }
 
 void node:: sortList(){
