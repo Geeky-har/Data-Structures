@@ -13,6 +13,7 @@ class ListQueue{    // class for the each node in the queue
         void deQueue();         // in the queue
         void dispQueue();
         bool isEmpty();
+        void numEleQueue();
 };
 
 ListQueue* rear = nullptr;      // rear pointing at the last node
@@ -101,6 +102,18 @@ void ListQueue::dispQueue(){        // method for displaying elements of the que
     }
 }
 
+void ListQueue::numEleQueue(){      // method for determining the number of elements in the queue
+    int count = 0;
+    ListQueue *t = front;
+
+    while(t != nullptr){
+        count++;
+        t = t->next;
+    }
+
+    cout<<"The number of elements in the queue are: "<<count;
+}
+
 int main(){
     int option;
     ListQueue lq;
@@ -112,7 +125,8 @@ int main(){
         cout<<"1. To enqueue an element from the queue"<<endl;
         cout<<"2. To dequeue an element from the queue"<<endl;
         cout<<"3. To print the elements of the queue"<<endl;
-        cout<<"4. Exit"<<endl;
+        cout<<"4. To get the number of elemnts in the queue"<<endl;
+        cout<<"5. Exit"<<endl;
 
         cin>>option;
 
@@ -129,9 +143,13 @@ int main(){
         case 3:
             lq.dispQueue();
             break;
+
+        case 4:
+            lq.numEleQueue();
+            break;
         }
 
-    }while(option != 4);
+    }while(option != 5);
 
     return 0;
 }
