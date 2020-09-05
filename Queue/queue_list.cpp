@@ -1,77 +1,94 @@
+// In this program we will be implementing Queue ADT with the help of linked list!!
+
 #include<iostream>
 using namespace std;
 
-class ListQueue{
+class ListQueue{    // class for the each node in the queue
     int data;
     ListQueue* next;
 
     public:
-        ListQueue* getNode();
+        ListQueue* getNode();       // methods for operation
         void enQueue();
-        void deQueue();
+        void deQueue();         // in the queue
         void dispQueue();
+        bool isEmpty();
 };
 
-ListQueue* rear = nullptr;
-ListQueue* front = nullptr;
+ListQueue* rear = nullptr;      // rear pointing at the last node
+ListQueue* front = nullptr;     // front pointing at the first node
 
 
-ListQueue* ListQueue::getNode(){
+ListQueue* ListQueue::getNode(){    // method to get a new node
     ListQueue *t;
     t = new ListQueue();
-    return(t);
+    return(t);                      // will return a pointer pointing to the newly created node
 }
 
-void ListQueue::enQueue(){
-    ListQueue *node = getNode();
+void ListQueue::enQueue(){          // method for enqueue operation
+    ListQueue *node = getNode();        // node gets the reference of the newly created node
     int data;
 
-    if(!node)
+    if(!node)           // node creation failed
         cout<<"Cant add elements.. Some problem occurred!"<<endl;
 
-    else{
+    else{ 
         cout<<"Enter the element that you want to add: "<<endl;
-        cin>>data;
+        cin>>data;      // user input data
 
-        node->data = data;
+        node->data = data;      // data stored in the node
 
-        if(front == nullptr){
-            front = rear = node;
-            node->next = nullptr;
+        if(isEmpty()){       // if front is null(empty list)
+            front = rear = node;    // both front and rear points at first node
+            node->next = nullptr;   // set next as null
         }
 
-        else if(front == rear){
-            rear = node;
-            node->next = nullptr;
-            front->next = node;
+        else if(front == rear){     // when there is only one node in the list
+            rear = node;            // rear holds the reference of the newly created node
+            node->next = nullptr;   // node next set as null
+            front->next = node;     // first node points to second node(newly created)
         }
 
-        else{
-            node->next = nullptr;
-            rear->next = node;
-            rear = rear->next;
+        else{                       // when there is two or more nodes in the list
+            node->next = nullptr;   // new node node set as null
+            rear->next = node;      // last node will point to the new node(now last node)
+            rear = rear->next;      // rear will now point to the newly created node(last node)
         }
 
         cout<<"Item added successfully in the queue"<<endl;
     }
 }
 
-void ListQueue:: deQueue(){
-    int del_data;
-    ListQueue* front1;
+bool ListQueue:: isEmpty(){         // method for checking empty list condition
+    if(front == nullptr)
+        return true;
 
-    del_data = front->data;
-    front1 = front;
-    front = front->next;
-    delete(front1);
-
-    cout<<"The element which is deleted from the queue is: "<<del_data<<endl;
+    else
+        return false;
 }
 
-void ListQueue::dispQueue(){
-    ListQueue *t = front;
+void ListQueue:: deQueue(){         // method for dequeue
+    int del_data;                   // variable to hold the deleted value
+    ListQueue* front1;              // pointer for holding the reference of first node
 
-    if(t == nullptr)
+    if(isEmpty())
+        cout<<"The list is empty cannot perform dequeue operation"<<endl;
+
+    else{
+        del_data = front->data;         // del_data gets the value stored in the first node
+        front1 = front;                 // front1 gets the reference of the first node
+        front = front->next;            // front now points to the next node
+        delete(front1);                 // deleted the first node(second node is first now)
+
+        cout<<"The element which is deleted from the queue is: "<<del_data<<endl;
+    }
+
+}
+
+void ListQueue::dispQueue(){        // method for displaying elements of the queue
+    ListQueue *t = front;           // t holds the address of the first node
+
+    if(t == nullptr)                // if list is empty
         cout<<"The list is empty!"<<endl;
     
     else{
