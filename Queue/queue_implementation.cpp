@@ -1,13 +1,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-struct ArrayQueue
+class ArrayQueue
 {
-	int rear, front, capacity;
-	int *array;
+	private:
+		int rear, front, capacity;
+		int *array;
+
+	public:
+		ArrayQueue* CreateQueue(int);
+		ArrayQueue* enQueue();
+		void DispQueue(ArrayQueue*);
+		void deQueue(ArrayQueue*);
+		void addQueue(ArrayQueue*);
 };
 
-struct ArrayQueue* CreateQueue(int capa){
+ ArrayQueue* ArrayQueue:: CreateQueue(int capa){
 	struct ArrayQueue *p = new struct ArrayQueue;
 	if(!p)
 		return(NULL);
@@ -22,42 +30,23 @@ struct ArrayQueue* CreateQueue(int capa){
 	return(p);	
 }
 
-struct ArrayQueue* enQueue(){
+ArrayQueue* ArrayQueue:: enQueue(){
 	int n, data;
 	cout<<"Please Enter the size of the queue: "<<endl;
 	cin>>n;
-	struct ArrayQueue* Q;	
+	struct ArrayQueue* Q;
 	Q = CreateQueue(n);
+
+	cout<<"The queue of size "<<n<<" is created successfully"<<endl;
 	
-	cout<<"Now enter the dataset you want to insert (press -1 after the last element)"<<endl;
-	cin>>data;
-	
-	do{
-		
-		if(Q->rear == n-1)
-			cout<<"The queue is full cant perform Insertion Operation"<<endl;
-		
-		else if(Q->front < 0){
-			Q->front = 0;
-			Q->rear = 0;
-			Q->array[Q->rear] = data;
-		}
-	
-		else{
-			Q->rear = Q->rear + 1;
-			Q->array[Q->rear] = data;
-		}
-		
-		cout<<"Now enter the dataset you want to insert (press -1 after the last element)"<<endl;
-		cin>>data;
-		
-	}while(data!=-1);
-		
 	return(Q);
 }
 
-void DispQueue(struct ArrayQueue *ptr){
+void ArrayQueue:: DispQueue(ArrayQueue *ptr){
 	if(ptr->rear == -1)
+		cout<<"The Queue is empty"<<endl;
+
+	else if(ptr->front > ptr->rear)
 		cout<<"The Queue is empty"<<endl;
 		
 	else{
@@ -78,7 +67,7 @@ void DispQueue(struct ArrayQueue *ptr){
 	
 }
 
-void deQueue(struct ArrayQueue* ptr){
+void ArrayQueue:: deQueue(struct ArrayQueue* ptr){
 	int temp;
 	if(ptr->front == -1)
 		cout<<"Queue is empty cannot perform dequeue operation";
@@ -90,58 +79,65 @@ void deQueue(struct ArrayQueue* ptr){
 	}
 }
 
-void addQueue(struct ArrayQueue* Q){
+void ArrayQueue:: addQueue(ArrayQueue* Q){
 	int item;
-	cout<<"Please Enter The item that you want to add"<<endl;
-	cin>>item;
 	
-//	if(Q->rear == n-1)
-//		cout<<"The queue is full cant perform Insertion Operation"<<endl;
+	if(Q->rear == Q->capacity - 1)
+		cout<<"The queue is full cant perform Insertion Operation"<<endl;
 		
-	if(Q->front < 0){
+	else if(Q->front < 0){
+		cout<<"Please Enter The item that you want to add"<<endl;
+		cin>>item;
 		Q->front = 0;
 		Q->rear = 0;
 		Q->array[Q->rear] = item;
+
+		cout<<"Item added successfully in the queue!!"<<endl;
+
 	}
 	
 	else{
+		cout<<"Please Enter The item that you want to add"<<endl;
+		cin>>item;
 		Q->rear = Q->rear + 1;
 		Q->array[Q->rear] = item;
-	}
-}
 
+		cout<<"Item added successfully in the queue!!"<<endl;
+
+	}
+
+}
 
 int main(){
 	int op;
-	struct ArrayQueue *t;
+	ArrayQueue *t;
+	ArrayQueue queue;
 	
 	cout<<"Select an option from below list: "<<endl;
 	do{
 		cout<<"\n\n****************************Main Menu****************************"<<endl;
 		cout<<"1. For Creating a queue"<<endl;
-		cout<<"2. For Displaying the elements in Queue"<<endl;
+		cout<<"2. To add an element"<<endl;
 		cout<<"3. To remove an element"<<endl;
-		cout<<"4. To add an element"<<endl;
+		cout<<"4. For Displaying the elements in Queue"<<endl;
 		cout<<"5. Exit"<<endl;
 		cin>>op;
 		
 		switch(op){
-			case 1: t = enQueue();
+			case 1: t = queue.enQueue();
 					break;
 				
-			case 2: DispQueue(t);
+			case 4: queue.DispQueue(t);
 					break;
 				
-			case 3: deQueue(t);
+			case 3: queue.deQueue(t);
 					break;
 					
-			case 4: addQueue(t);
+			case 2: queue.addQueue(t);
 					break;
-				
 		}
 		
 	}while(op!=5);
 	
 	return 0;
-
 }
