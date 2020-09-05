@@ -13,6 +13,7 @@ class ListStack{
         void push();
         void printStack();
         void pop();
+        void sizeStack();
 };
 
 ListStack* start = nullptr;
@@ -92,6 +93,18 @@ void ListStack:: pop(){
     
 }
 
+void ListStack:: sizeStack(){
+    ListStack* t = start;
+    int count = 0;
+
+    while(t != nullptr){
+        count++;
+        t = t->address;
+    }
+
+    cout<<"The size of the stack is: "<<count<<endl;
+}
+
 int main(){
     int option;
     ListStack ll;
@@ -102,7 +115,8 @@ int main(){
         cout<<"1. To perform Push operation"<<endl;
         cout<<"2. To perform Pop operation"<<endl;
         cout<<"3. To print the stack elements"<<endl;
-        cout<<"4. Exit"<<endl;
+        cout<<"4. To print the size of the stack"<<endl;
+        cout<<"5. Exit"<<endl;
 
         cin>>option;
 
@@ -119,9 +133,13 @@ int main(){
         case 3:
             ll.printStack();
             break;
+
+        case 4:
+            ll.sizeStack();
+            break;
         }
 
-    }while(option != 4);
+    }while(option != 5);
 
     return 0;
 }
