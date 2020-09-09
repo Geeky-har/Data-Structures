@@ -116,7 +116,7 @@ void ArrayQueue::dispQueue(ArrayQueue* p){
     {
         int i = p->front;
 
-        for(i; i < p->capa; i++){
+        for(i; i <= p->rear; i++){
             cout<<p->array[i]<<" ";
         }
     }
@@ -149,9 +149,22 @@ void ArrayQueue::sizeQueue(ArrayQueue* p){
     cout<<"The current size of the queue is: "<<size<<endl;
 }
 
+void ArrayQueue::deleteQueue(ArrayQueue* p){
+    if(p){
+        if(p->array)
+            delete(p->array);
+        delete(p);
+
+        cout<<"Existing Queue deleted successfully"<<endl;
+    }
+
+    else
+        cout<<"No queue found!"<<endl;
+}
+
 int main(){
 	int op;
-	ArrayQueue *t;
+	ArrayQueue *t = nullptr;
 	ArrayQueue queue;
 	
 	cout<<"Select an option from below list: "<<endl;
@@ -182,8 +195,8 @@ int main(){
 			case 5: queue.sizeQueue(t);
 					break;
 
-			// case 6: queue.deleteQueue(t);
-			// 		break;
+			case 6: queue.deleteQueue(t);
+					break;
 		}
 		
 	}while(op!=7);
