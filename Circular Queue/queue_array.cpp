@@ -137,7 +137,14 @@ void ArrayQueue::dispQueue(ArrayQueue* p){
 void ArrayQueue::sizeQueue(ArrayQueue* p){
     int size;
 
-    size = (p->capa - p->front + p->rear + 1) % p->capa;
+    if(isEmpty(p))
+        size = 0;
+
+    else if(isFull(p))
+        size = p->capa;
+
+    else
+        size = (p->capa - p->front + p->rear + 1) % p->capa;
 
     cout<<"The current size of the queue is: "<<size<<endl;
 }
@@ -175,8 +182,8 @@ int main(){
 			case 5: queue.sizeQueue(t);
 					break;
 
-			case 6: queue.deleteQueue(t);
-					break;
+			// case 6: queue.deleteQueue(t);
+			// 		break;
 		}
 		
 	}while(op!=7);
