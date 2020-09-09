@@ -18,6 +18,8 @@ class ArrayQueue{
         void enQueue(ArrayQueue*);
         void deQueue(ArrayQueue*);
         void dispQueue(ArrayQueue*);
+        void sizeQueue(ArrayQueue*);
+        void deleteQueue(ArrayQueue*);
 };
 
 ArrayQueue* ArrayQueue::CreateQueue(int capa){
@@ -132,6 +134,14 @@ void ArrayQueue::dispQueue(ArrayQueue* p){
     cout<<"Rear "<<p->rear<<endl;
 }
 
+void ArrayQueue::sizeQueue(ArrayQueue* p){
+    int size;
+
+    size = (p->capa - p->front + p->rear + 1) % p->capa;
+
+    cout<<"The current size of the queue is: "<<size<<endl;
+}
+
 int main(){
 	int op;
 	ArrayQueue *t;
@@ -144,7 +154,9 @@ int main(){
 		cout<<"2. To add an element"<<endl;
 		cout<<"3. To remove an element"<<endl;
 		cout<<"4. For Displaying the elements in Queue"<<endl;
-		cout<<"5. Exit"<<endl;
+		cout<<"5. For Displaying the number of elements in the Queue"<<endl;
+		cout<<"6. For Deleting the whole Queue"<<endl;
+		cout<<"7. Exit"<<endl;
 		cin>>op;
 		
 		switch(op){
@@ -159,9 +171,15 @@ int main(){
 					
 			case 4: queue.dispQueue(t);
 					break;
+
+			case 5: queue.sizeQueue(t);
+					break;
+
+			case 6: queue.deleteQueue(t);
+					break;
 		}
 		
-	}while(op!=5);
+	}while(op!=7);
 	
 	return 0;
 }
