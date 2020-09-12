@@ -54,14 +54,22 @@ string convert(string infix){
         }
 
         else{
-            
-            while( st.top() != 'N' &&  prec( st.top() ) >= prec( infix[i] ) ){
-                c = st.top();
-                st.pop();
-                post += c;
-            }
 
-            st.push(infix[i]);
+            if( prec( st.top() ) < prec( infix[i] ))
+                st.push(infix[i]);
+
+            else{
+                // this while block will execute if stack became empty or operator in stack top have higher
+                // precedence than the incoming operator it will append the operator to postfix
+
+                while( st.top() != 'N' &&  prec( st.top() ) >= prec( infix[i] ) ){
+                    c = st.top();
+                    st.pop();
+                    post += c;
+                }
+
+                st.push(infix[i]);
+            }
         }
     }
 
