@@ -16,6 +16,8 @@ class node{			//node datatype consists of int and a pointer of another node.
 		void searchEle();
 		void revList();
 		void delList();
+		void nRev();
+		int noNode(node*);
 };
 
 node *start=NULL;     //global variable
@@ -296,7 +298,44 @@ void node:: delList(){
 		cout<<"Your List is Successfully deleted"<<endl;
 		
 	}
-	
+}
+
+int node::noNode(node* t){		// method to calc the no of nodes present after a specific node
+	int count = 0;
+
+	while(t->address != NULL){
+		t = t->address;
+		count++;
+	}
+
+	return count;
+}
+
+void node:: nRev(){		// algorithm by brute force technique
+	int n;
+	node* t = start;
+
+	if(t == NULL)
+		cout<<"The list is empty!"<<endl;
+
+	else{
+		cout<<"Enter the value of n: "<<endl;
+		cin>>n;
+
+		while(noNode(t) != n-1){
+			if(noNode(t) < n-1){
+				cout<<"Few nodes in list"<<endl;
+				break;
+			}
+
+			else
+				t = t->address;
+		}
+
+		cout<<"Value of that node is: "<<t->data<<endl;
+		
+	}
+
 }
 
 int main(){
@@ -316,7 +355,8 @@ int main(){
 		cout<<"7. To Perform Searching Operation"<<endl;
 		cout<<"8. To Reverse the List"<<endl;
 		cout<<"9. Delete the whole List"<<endl;
-		cout<<"10. Exit "<<endl;
+		cout<<"10. To find nth node from the last"<<endl;
+		cout<<"11. Exit "<<endl;
 		cin>>option;
 		
 		switch(option){
@@ -346,10 +386,12 @@ int main(){
 
 			case 9 : ob1.delList();
 					 break;
-					 
+
+			case 10 : ob1.nRev();
+					  break;
 		}
 		
-	}while(option!=10);
+	}while(option!=11);
 	
 	return 0;
 }
