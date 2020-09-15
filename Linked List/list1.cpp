@@ -18,6 +18,7 @@ class node{			//node datatype consists of int and a pointer of another node.
 		void delList();
 		void nRev();
 		int noNode(node*);
+		void numNode();
 };
 
 node *start=NULL;     //global variable
@@ -335,7 +336,23 @@ void node:: nRev(){		// algorithm by brute force technique
 		cout<<"Value of that node is: "<<t->data<<endl;
 		
 	}
+}
 
+void node:: numNode(){		// method for finding the number of nodes in the list
+	int count = 0;
+	node* t = start;
+
+	if(t == NULL)
+		cout<<"List is empty"<<endl;
+	
+	else{
+		while( t != NULL){
+			count += 1;
+			t = t->address;
+		}
+
+		cout<<"The number of elements in the list are: "<<count<<endl;
+	}
 }
 
 int main(){
@@ -346,17 +363,19 @@ int main(){
 	
 	do{
 		cout<<"\n****************************Main Menu****************************"<<endl<<endl;
+
 		cout<<"1. Create a List "<<endl;
 		cout<<"2. Print a List "<<endl;
-		cout<<"3. Delete a Node"<<endl;
-		cout<<"4. To Perform sorting"<<endl;
-		cout<<"5. To add a node after an existing node"<<endl;
-		cout<<"6. To add an item right after the header(i.e in the beginning)"<<endl;
-		cout<<"7. To Perform Searching Operation"<<endl;
-		cout<<"8. To Reverse the List"<<endl;
-		cout<<"9. Delete the whole List"<<endl;
-		cout<<"10. To find nth node from the last"<<endl;
-		cout<<"11. Exit "<<endl;
+		cout<<"3. To get the number of elements in the list "<<endl;
+		cout<<"4. Delete a Node"<<endl;
+		cout<<"5. To Perform sorting"<<endl;
+		cout<<"6. To add a node after an existing node"<<endl;
+		cout<<"7. To add an item right after the header(i.e in the beginning)"<<endl;
+		cout<<"8. To Perform Searching Operation"<<endl;
+		cout<<"9. To Reverse the List"<<endl;
+		cout<<"10. Delete the whole List"<<endl;
+		cout<<"11. To find nth node from the last"<<endl;
+		cout<<"12. Exit "<<endl;
 		cin>>option;
 		
 		switch(option){
@@ -365,33 +384,36 @@ int main(){
 			
 			case 2 : ob1.printList();
 					 break;
+
+			case 3 : ob1.numNode();
+					 break;
 					 
-			case 3 : ob1.deleteNode();
+			case 4 : ob1.deleteNode();
 					 break;
 					 
-			case 4 : ob1.sortList();
+			case 5 : ob1.sortList();
 					 break;
 
-			case 5 : ob1.addElement();
+			case 6 : ob1.addElement();
 					 break;
 
-			case 6 : ob1.addElementBeg();
+			case 7 : ob1.addElementBeg();
 					 break;
 
-			case 7 : ob1.searchEle();
+			case 8 : ob1.searchEle();
 					 break;
 
-			case 8 : ob1.revList();
+			case 9 : ob1.revList();
 					 break;
 
-			case 9 : ob1.delList();
+			case 10 : ob1.delList();
 					 break;
 
-			case 10 : ob1.nRev();
+			case 11 : ob1.nRev();
 					  break;
 		}
 		
-	}while(option!=11);
+	}while(option!=12);
 	
 	return 0;
 }
