@@ -21,6 +21,7 @@ public:
     void printList();
     void insertBeg();
     void deleteBeg();
+    void insertList();
 };
 
 CLLNode *start = nullptr;
@@ -144,6 +145,51 @@ void CLLNode::deleteBeg()
     }
 }
 
+void CLLNode::insertList(){
+    CLLNode* t = start;
+    CLLNode* newNode;
+
+    if(t == nullptr)
+        cout<<"The list is empty!!"<<endl;
+
+    else{
+        int data, key;
+
+        cout<<"Enter the element after which you want to perform insertion: "<<endl;
+        cin>>key;
+
+        cout<<"Now enter the value of new element: "<<endl;
+        cin>>data;
+
+        while(t->next != start && t->data != key)
+            t = t->next;
+
+        if(t->next == start && t->data != key)
+            cout<<"The key you entered is not present in the list"<<endl;
+
+        else if(t->next == start && t->data == key){
+            newNode = createNode();
+            newNode->data = data;
+
+            t->next = newNode;
+            newNode->next = start;
+
+            cout<<"New node added successfully!!"<<endl;
+        }
+
+        else{
+            CLLNode* temp = t->next;
+            newNode = createNode();
+            newNode->data = data;
+            t->next = newNode;
+            newNode->next = temp;
+
+            cout<<"New node added successfully!!"<<endl;
+        }
+
+    }
+}
+
 int main()
 {
     int option;
@@ -158,8 +204,9 @@ int main()
         cout << "1. To insert element in the list" << endl;
         cout << "2. To print the list" << endl;
         cout << "3. To insert an element in the beg" << endl;
-        cout << "4. To delete an element from the beg" << endl;
-        cout << "5. Exit" << endl;
+        cout << "4. To insert an element anywhere in the list" << endl;
+        cout << "5. To delete an element from the beg" << endl;
+        cout << "6. Exit" << endl;
         cin >> option;
 
         switch (option)
@@ -177,11 +224,15 @@ int main()
             break;
 
         case 4:
+            obj.insertList();
+            break;
+
+        case 5:
             obj.deleteBeg();
             break;
         }
 
-    } while (option != 5);
+    } while (option != 6);
 
     return 0;
 }
