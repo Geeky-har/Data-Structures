@@ -171,7 +171,18 @@ void DeNode::deleteNode()
             cout << "The value you entered is not present in the list!" << endl;
         }
 
-        else if (traverse->next == nullptr && traverse->data == key)
+        else if(traverse->prev == nullptr && traverse->data == key)     // for deletion from the beginning
+        {
+            DeNode *temp = Start;
+            Start = traverse->next;
+            traverse->next->prev = nullptr;
+            traverse->next = nullptr;
+            delete(traverse);
+
+            cout<<"item successfully deleted from the list!"<<endl;
+        }
+
+        else if (traverse->next == nullptr && traverse->data == key)    // for deletion at the end
         {
             traverse->prev->next = nullptr;
             delete (traverse);
@@ -179,7 +190,7 @@ void DeNode::deleteNode()
             cout << "Item Successfully deleted from the list!" << endl;
         }
 
-        else
+        else            // for deletion in the middle of the list
         {
             traverse->prev->next = traverse->next;
             traverse->next->prev = traverse->prev;
