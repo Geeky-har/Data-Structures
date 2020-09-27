@@ -20,7 +20,7 @@ public:
     void insertNode(BstNode *);
     void inorderT(BstNode *);
     bool find(BstNode *, int);
-    void deleteNode(BstNode *, int);
+    BstNode *deleteNode(BstNode *, int);
 };
 
 BstNode *BstNode::newNode(int data)
@@ -114,15 +114,6 @@ void BstNode::inorderT(BstNode *root)
         cout << curr->data << " ";
         curr = curr->right;
     }
-
-    //recursive approach
-
-    // if (t == nullptr)
-    //     return;
-
-    // inorderT(t->left);
-    // cout << t->data << " ";
-    // inorderT(t->right);
 }
 
 bool BstNode::find(BstNode *root, int value)
@@ -152,7 +143,7 @@ bool BstNode::find(BstNode *root, int value)
     }
 }
 
-void BstNode::deleteNode(BstNode *root, int key)
+BstNode *BstNode::deleteNode(BstNode *root, int key)
 {
 
     BstNode *curr = root;    // for pointing to the node that has to be deleted
@@ -174,7 +165,7 @@ void BstNode::deleteNode(BstNode *root, int key)
     if (curr == nullptr)
     {
         cout << "The key you entered is not present in the tree!" << endl;
-        return;
+        return root;
     }
 
     // now we will check if the current node has atmost one child or not
@@ -195,13 +186,12 @@ void BstNode::deleteNode(BstNode *root, int key)
         if (prev == nullptr)
         {
             cout << "The node is deleted successfully!" << endl;
-            return;
+            return newcurr;
         }
 
         // now we will check whether currnode is in left subtree or right subtree of the parent node
-
-        if (curr == prev->left)     // if currnode is left child
-        {                         
+        if (curr == prev->left) // if currnode is left child
+        {
             prev->left = newcurr; // the left of parent will point to the newcurr
         }
 
@@ -219,14 +209,14 @@ void BstNode::deleteNode(BstNode *root, int key)
 
     else // if the node to be deleted have two child nodes
     {
-        BstNode *newcurr; // will hold the address of the node which will replace the currnode
-        BstNode *prev;    // for pointing to the parent of newcurr
+        BstNode *newcurr;        // will hold the address of the node which will replace the currnode
+        BstNode *prev = nullptr; // for pointing to the parent of newcurr
 
         // now we will calculate the inorder successor(smallest in right subtree) of the curr
 
         newcurr = curr->right; // newcurr now points to the node of right sub tree
 
-        while (newcurr != nullptr)
+        while (newcurr->left != nullptr)
         {
             prev = newcurr;
             newcurr = newcurr->left;
@@ -234,7 +224,7 @@ void BstNode::deleteNode(BstNode *root, int key)
 
         // now newcurr points to the inorder successor of curr
 
-        if (prev != nullptr)             // if the parent of newcurr is not a root node
+        if (prev != nullptr)             // if the parent of newcurr is curr itself
             prev->left = newcurr->right; // parent of newcurr stores right child of newcurr in its left subtree
 
         else                              // if the parent of newcurr is a node
@@ -247,6 +237,8 @@ void BstNode::deleteNode(BstNode *root, int key)
 
         cout << "The node having value " << key << " is deleted successfully" << endl;
     }
+
+    return root;
 }
 
 int main()
@@ -302,7 +294,7 @@ int main()
             cout << "Enter the value of the node that you want to delete: " << endl;
             cin >> value2;
 
-            b.deleteNode(root, value2);
+            root = b.deleteNode(root, value2);
             break;
         }
 
