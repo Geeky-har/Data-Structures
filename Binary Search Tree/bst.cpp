@@ -15,6 +15,9 @@ public:
     BstNode *rootNode(int);
     BstNode* insertNode(BstNode *, int);
     void inorderT(BstNode *);
+    void preorderT(BstNode *);
+    void postorderT(BstNode *);
+    void levelorderT(BstNode *);
 };
 
 BstNode *BstNode::newNode()
@@ -71,7 +74,7 @@ BstNode* BstNode::insertNode(BstNode *root, int data)
     return root;
 }
 
-void BstNode::inorderT(BstNode *root)
+void BstNode::inorderT(BstNode *root)       // Time Complexity O(n); Space Complexity O(n)
 {
     if(root == nullptr){
         return;
@@ -80,6 +83,53 @@ void BstNode::inorderT(BstNode *root)
     inorderT(root->left);
     cout << root->data << " ";
     inorderT(root->right);
+}
+
+void BstNode::preorderT(BstNode* root){     // Time Complexity O(n); Space Complexity O(n)
+    
+    if(root == nullptr)
+        return;
+
+    cout<<root->data<<" ";
+    preorderT(root->left);
+    preorderT(root->right);
+}
+
+void BstNode::postorderT(BstNode* root){    // Time Complexity O(n); Space Complexity O(n)
+
+    if(root == nullptr)
+        return;
+
+    postorderT(root->left);
+    postorderT(root->right);
+    cout<<root->data<<" ";
+
+}
+
+void BstNode::levelorderT(BstNode* root){
+
+    if(root == nullptr){
+        cout<<"Root Not set!!"<<endl;
+        return;
+    }
+
+    queue<BstNode*> q;
+    BstNode* temp;
+
+    q.push(root);
+
+    while(!q.empty()){
+        temp = q.front();
+        cout<<temp->data<<" ";
+        q.pop();
+
+        if(temp->left)
+            q.push(temp->left);
+
+        if(temp->right)
+            q.push(temp->right);
+
+    }
 }
 
 int main(){
@@ -92,7 +142,10 @@ int main(){
         cout<<"1. To create a root"<<endl;
         cout<<"2. To insert a node"<<endl;
         cout<<"3. To display inorder traversal of the tree"<<endl;
-        cout<<"4. Exit"<<endl;
+        cout<<"4. To display preorder traversal of the tree"<<endl;
+        cout<<"5. To display postorder traversal of the tree"<<endl;
+        cout<<"6. To display Level-Order traversal of the tree"<<endl;
+        cout<<"7. Exit"<<endl;
         cin>>option;
 
     
@@ -121,9 +174,20 @@ int main(){
                 b.inorderT(root);
                 break;
 
+            case 4:
+                b.preorderT(root);
+                break;
+
+            case 5:
+                b.postorderT(root);
+                break;
+
+            case 6:
+                b.levelorderT(root);
+                break;
         }
 
-    }while(option != 4);
+    }while(option != 7);
 
     return 0;
 }
