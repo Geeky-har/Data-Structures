@@ -224,10 +224,10 @@ BstNode *BstNode::deleteNode(BstNode *root, int key)
 
         // now newcurr points to the inorder successor of curr
 
-        if (prev != nullptr)             // if the parent of newcurr is curr itself
+        if (prev != nullptr)             // if the parent of newcurr is not curr(a node)
             prev->left = newcurr->right; // parent of newcurr stores right child of newcurr in its left subtree
 
-        else                              // if the parent of newcurr is a node
+        else                              // if the parent of newcurr is curr itself
             curr->right = newcurr->right; // right of curr node points to the right of newcurr
 
         // replace the curr data with newcurr
