@@ -23,6 +23,7 @@ public:
     BstNode *maxValueNode(BstNode *);
     int minValue(BstNode *);
     int maxValue(BstNode *);
+    bool search(BstNode * , int);
 };
 
 BstNode *BstNode::newNode()
@@ -166,7 +167,7 @@ BstNode *BstNode::deleteNode(BstNode *root, int key)
         {
             temp = maxValueNode(root->left); // will return the inorder predecessor
             root->data = temp->data;         // changed the element to inorder predecessor
-            root->left = deleteNode(root->left, root->data);
+            root->left = deleteNode(root->left, root->data);    // will delete the inorder predecessor from the left subtree
         }
 
         else
@@ -174,11 +175,11 @@ BstNode *BstNode::deleteNode(BstNode *root, int key)
 
             temp = root;
 
-            if (root->left == nullptr)
-                root = root->right;
+            if (root->left == nullptr)     // if root have right node
+                root = root->right;        // right node will replace the node to be deleted
 
-            else if (root->right == nullptr)
-                root = root->left;
+            else if (root->right == nullptr)    //---do---
+                root = root->left;              //---de---
 
             delete (temp);
         }
@@ -186,7 +187,7 @@ BstNode *BstNode::deleteNode(BstNode *root, int key)
 
     return (root);
 
-    // Now root points to that node which has to be deleted
+    // (alternate)Now root points to that node which has to be deleted
     // if one of the children is empty
 
     // if (root->left == NULL)
@@ -271,6 +272,22 @@ int BstNode::maxValue(BstNode *root)
     return maxValue(root->right);
 }
 
+bool BstNode::search(BstNode* root, int key){
+
+    if(root == nullptr)
+        return false;
+
+    else if(root->data == key)
+        return true;
+
+    else if(root->data > key)
+        return search(root->left, key);
+
+    else
+        return search(root->right, key);
+
+}
+
 int main()
 {
     int option;
@@ -290,7 +307,8 @@ int main()
         cout << "7. To delete a node from the tree" << endl;
         cout << "8. To display the minimum element in the tree" << endl;
         cout << "9. To display the maximum element in the tree" << endl;
-        cout << "10. Exit" << endl;
+        cout << "10. To search for a element in the tree" << endl;
+        cout << "11. Exit" << endl;
         cin >> option;
 
         switch (option)
@@ -351,9 +369,21 @@ int main()
             max = b.maxValue(root);
 
             cout << "The largest value in the tree is: " << max << endl;
+
+        case 10:
+            int find;
+
+            cout<<"Enter the element that you have to search: "<<endl;
+            cin>>find;
+
+            if(b.search(root, find))
+                cout<<"Element found"<<endl;
+
+            else
+                cout<<"Element not found"<<endl;
         }
 
-    } while (option != 10);
+    } while (option != 11);
 
     return 0;
 }
