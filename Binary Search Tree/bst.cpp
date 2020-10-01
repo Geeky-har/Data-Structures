@@ -19,6 +19,10 @@ public:
     void preorderT(BstNode *);
     void postorderT(BstNode *);
     void levelorderT(BstNode *);
+    BstNode *minValueNode(BstNode *);
+    BstNode *maxValueNode(BstNode *);
+    int minValue(BstNode *);
+    int maxValue(BstNode *);
 };
 
 BstNode *BstNode::newNode()
@@ -140,69 +144,131 @@ void BstNode::levelorderT(BstNode *root)
 
 BstNode *BstNode::deleteNode(BstNode *root, int key)
 {
+    BstNode *temp;
 
     if (root == nullptr)
-        return root;
+        cout << "Root not set!!" << endl;
 
-    if (key < root->data)
+    else if (key < root->data)
     {
         root->left = deleteNode(root->left, key);
-        return root;
     }
 
     else if (key > root->data)
     {
         root->right = deleteNode(root->right, key);
-        return root;
     }
+
+    else
+    { // control wil reach here when the element is found
+
+        if (root->left && root->right)
+        {
+            temp = maxValueNode(root->left); // will return the inorder predecessor
+            root->data = temp->data;         // changed the element to inorder predecessor
+            root->left = deleteNode(root->left, root->data);
+        }
+
+        else
+        { // one or zero child nodes
+
+            temp = root;
+
+            if (root->left == nullptr)
+                root = root->right;
+
+            else if (root->right == nullptr)
+                root = root->left;
+
+            delete (temp);
+        }
+    }
+
+    return (root);
 
     // Now root points to that node which has to be deleted
     // if one of the children is empty
 
-    if (root->left == NULL)
-    {
-        BstNode *temp = root->right;
-        delete root;
-        return temp;
-    }
-    else if (root->right == NULL)
-    {
-        BstNode *temp = root->left;
-        delete root;
-        return temp;
-    }
+    // if (root->left == NULL)
+    // {
+    //     BstNode *temp = root->right;
+    //     delete root;
+    //     return temp;
+    // }
+    // else if (root->right == NULL)
+    // {
+    //     BstNode *temp = root->left;
+    //     delete root;
+    //     return temp;
+    // }
 
-    // If both children exist
-    else
-    {
-        BstNode *succParent = root;
+    // // If both children exist
+    // else
+    // {
+    //     BstNode *succParent = root;
 
-        // Find successor
-        BstNode *succ = root->right;
-        while (succ->left != NULL)
-        {
-            succParent = succ;
-            succ = succ->left;
-        }
+    //     // Find successor
+    //     BstNode *succ = root->right;
+    //     while (succ->left != NULL)
+    //     {
+    //         succParent = succ;
+    //         succ = succ->left;
+    //     }
 
-        // Delete successor. Since successor
-        // is always left child of its parent
-        // we can safely make successor's right
-        // right child as left of its parent.
-        // If there is no succ, then assign
-        // succ->right to succParent->right
-        if (succParent != root)
-            succParent->left = succ->right;
-        else
-            succParent->right = succ->right;
+    //     // Delete successor. Since successor
+    //     // is always left child of its parent
+    //     // we can safely make successor's right
+    //     // right child as left of its parent.
+    //     // If there is no succ, then assign
+    //     // succ->right to succParent->right
+    //     if (succParent != root)
+    //         succParent->left = succ->right;
+    //     else
+    //         succParent->right = succ->right;
 
-        // Copy Successor Data to root
-        root->data = succ->data;
+    //     // Copy Successor Data to root
+    //     root->data = succ->data;
 
-        // Delete Successor and return root
-        delete succ;
-        return root;
-    }
+    //     // Delete Successor and return root
+    //     delete succ;
+    //     return root;
+    // }
+}
+
+BstNode *BstNode::minValueNode(BstNode *root)
+{
+
+    if (root->left == nullptr)
+        return (root);
+
+    return minValueNode(root->left);
+}
+
+BstNode *BstNode::maxValueNode(BstNode *root)
+{
+
+    if (root->right == nullptr)
+        return (root);
+
+    return maxValueNode(root->right);
+}
+
+int BstNode::minValue(BstNode *root)
+{
+
+    if (root->left == nullptr)
+        return (root->data);
+
+    return minValue(root->left);
+}
+
+int BstNode::maxValue(BstNode *root)
+{
+
+    if (root->right == nullptr)
+        return (root->data);
+
+    return maxValue(root->right);
 }
 
 int main()
@@ -222,7 +288,9 @@ int main()
         cout << "5. To display postorder traversal of the tree" << endl;
         cout << "6. To display Level-Order traversal of the tree" << endl;
         cout << "7. To delete a node from the tree" << endl;
-        cout << "8. Exit" << endl;
+        cout << "8. To display the minimum element in the tree" << endl;
+        cout << "9. To display the maximum element in the tree" << endl;
+        cout << "10. Exit" << endl;
         cin >> option;
 
         switch (option)
@@ -270,9 +338,22 @@ int main()
 
             root = b.deleteNode(root, key);
             break;
+
+        case 8:
+            int min;
+            min = b.minValue(root);
+
+            cout << "The smallest value in the tree is: " << min << endl;
+            break;
+
+        case 9:
+            int max;
+            max = b.maxValue(root);
+
+            cout << "The largest value in the tree is: " << max << endl;
         }
 
-    } while (option != 8);
+    } while (option != 10);
 
     return 0;
 }
