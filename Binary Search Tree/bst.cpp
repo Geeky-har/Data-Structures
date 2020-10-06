@@ -24,6 +24,7 @@ public:
     int minValue(BstNode *);
     int maxValue(BstNode *);
     bool search(BstNode * , int);
+    int findHeight(BstNode*);
 };
 
 BstNode *BstNode::newNode()
@@ -179,7 +180,7 @@ BstNode *BstNode::deleteNode(BstNode *root, int key)
                 root = root->right;        // right node will replace the node to be deleted
 
             else if (root->right == nullptr)    //---do---
-                root = root->left;              //---de---
+                root = root->left;              //---do---
 
             delete (temp);
         }
@@ -188,6 +189,7 @@ BstNode *BstNode::deleteNode(BstNode *root, int key)
     return (root);
 
     // (alternate)Now root points to that node which has to be deleted
+
     // if one of the children is empty
 
     // if (root->left == NULL)
@@ -288,6 +290,21 @@ bool BstNode::search(BstNode* root, int key){
 
 }
 
+// Time Complexity O(n); Space Complexity O(n)
+int BstNode::findHeight(BstNode* root){     // height means number of edges from node to leaf node(depth means the number of edges from the node to the root of the tree)
+
+    if(root == nullptr){                    // if root is null will return 0
+        return 0;
+    }
+
+    else{
+        int lheight = findHeight(root->left);       // this will calculate the height of left subtree
+        int rheight = findHeight(root->right);      // this will calculate the height of right subtree
+        
+        return max(lheight, rheight) + 1;       // will return the max of the latter + 1 (for leaf)
+    }
+}
+
 int main()
 {
     int option;
@@ -308,7 +325,8 @@ int main()
         cout << "8. To display the minimum element in the tree" << endl;
         cout << "9. To display the maximum element in the tree" << endl;
         cout << "10. To search for a element in the tree" << endl;
-        cout << "11. Exit" << endl;
+        cout << "11. To determine the height of the tree" << endl;
+        cout << "12. Exit" << endl;
         cin >> option;
 
         switch (option)
@@ -381,9 +399,16 @@ int main()
 
             else
                 cout<<"Element not found"<<endl;
+
+        case 11:
+            int num;
+            num = b.findHeight(root);
+
+            cout<<"The height the tree is: "<<num;
+
         }
 
-    } while (option != 11);
+    } while (option != 12);
 
     return 0;
 }
