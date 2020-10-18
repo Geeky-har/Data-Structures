@@ -24,8 +24,10 @@ class Graph: public AdjList, public AdjListNode{
         void addEdge(Graph*, int, int);
         AdjListNode* createNode(int);
         void printGraph(Graph*);
+        void remEdge(Graph*, int, int);
 
 };
+
 AdjListNode* Graph::createNode(int dest){       // method will create and return a new instance of AdjListNode
     AdjListNode* newNode = new AdjListNode();
     newNode->dest = dest;
@@ -89,6 +91,79 @@ void Graph::addEdge(Graph* g, int src, int dest){   // method to add an bidirect
     }
 }
 
+void Graph::remEdge(Graph* g, int src, int dest){   // method to remove an edge
+    if(g == nullptr){
+        cout<<"Graph not found!"<<endl;
+        return;
+    }
+
+    // for removing an edge between SRC->DEST
+
+    if(g->arr[src].head == nullptr){    // No edge is inclined
+        cout<<"No edge is associated with this source vertex"<<endl;
+        return;
+    }
+
+    else{   // Linked list node deletion operation implemented below -
+        AdjListNode* t = g->arr[src].head;
+        AdjListNode* t1 = nullptr;
+
+        if(t->dest == dest){
+            g->arr[src].head = t->next;
+            delete(t);
+        }
+
+        else{
+            while(t->dest != dest && t->next != nullptr){
+                t1 = t;
+                t = t->next;
+            }
+
+            if(t->next == nullptr && t->dest != dest){
+                cout<<"Destination vertex is not found in the graph!"<<endl;
+                return;
+            }
+
+            else if(t->next == nullptr && t->dest == dest){
+                t1->next = nullptr;
+                delete(t);
+            }
+
+            else{
+                t1->next = t->next;
+                delete(t);
+            }
+        }
+    }
+
+    // for removing an edge between DEST->SRC(in Adjacency list)
+
+    AdjListNode* t = g->arr[dest].head;
+    AdjListNode* t1 = nullptr;
+
+    if(t->dest == src){
+        g->arr[dest].head = t->next;
+        delete(t);
+    }
+
+    else{
+        while(t->dest != src && t->next != nullptr){
+            t1 = t;
+            t = t->next;
+        }
+
+        if(t->next == nullptr && t->dest == src){
+            t1->next = nullptr;
+            delete(t);
+        }
+
+        else{
+            t1->next = t->next;
+            delete(t);
+        }
+    }
+}
+
 void Graph::printGraph(Graph* g){       // method to print the resultant graph
     if(g == nullptr){           // if graph not created yet!
         cout<<"Graph not found!!"<<endl;
@@ -111,12 +186,12 @@ int main(){
     int op;
     Graph g, *gr = nullptr;
     do{
-
         cout<<"Select an option from below list: "<<endl;
         cout<<"1. To create a Graph"<<endl;
         cout<<"2. To add an edge"<<endl;
-        cout<<"3. To print the graph"<<endl;
-        cout<<"4. Exit"<<endl;
+        cout<<"3. To remove an edge"<<endl;
+        cout<<"4. To print the graph"<<endl;
+        cout<<"5. Exit"<<endl;
         cin>>op;
 
         switch (op)
@@ -145,11 +220,26 @@ int main(){
             }
 
         case 3:
+            if(gr == nullptr){
+                cout<<"Graph not found!!"<<endl;
+                break;
+            }
+
+            else{
+                int src_d, dest_d;
+                cout<<"Enter the source and destination vertex from where the edge has to be removed: "<<endl;
+                cin>>src_d>>dest_d;
+
+                g.remEdge(gr, src_d, dest_d);
+                break;
+            }
+
+        case 4:
             g.printGraph(gr);
             break;
         }
 
-    }while(op != 4);
+    }while(op != 5);
 
     return 0;
 }
