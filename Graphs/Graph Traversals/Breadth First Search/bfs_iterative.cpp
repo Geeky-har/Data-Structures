@@ -85,7 +85,7 @@ int main(){
         cout<<"Select an option from below list: "<<endl;
         cout<<"1. To create a graph"<<endl;
         cout<<"2. To add an edge in the graph"<<endl;
-        cout<<"3. To perform Depth First search operation"<<endl;
+        cout<<"3. To perform Breadth First search operation"<<endl;
         cout<<"4. Exit"<<endl;
         cin>>op;
 
