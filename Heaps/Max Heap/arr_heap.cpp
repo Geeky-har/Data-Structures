@@ -94,19 +94,23 @@ void Heap::percolateDown(Heap* h, int i){       // method to heapify a node and 
     right = rightChild(h, i);   // will find the right child node index
 
     if(left != -1 && h->array[left] > h->array[max])
-        max = left;
+    // if left child exists and left child is larger than the root node(set as largest)
+
+        max = left;     // max value will be set as the left child node
 
     if(right != -1 && h->array[right] > h->array[max])
-        max = right;
+    // if right child exists and right child is larger than the max value
 
-    if(max != i){
-        swap(h->array[i], h->array[max]);
-        percolateDown(h, max);
+        max = right;    // max value will be set as the right child node
+
+    if(max != i){       // if either of any child have value larger than the root node
+        swap(h->array[i], h->array[max]);   // swap the root value with child having largest value
+        percolateDown(h, max);  // will recursively call the method for the subsequent nodes of the affected subtree
     }
 
 }
 
-void Heap::resizeHeap(Heap* h){
+void Heap::resizeHeap(Heap* h){     // method to resize the heaps capacity
     if(h == nullptr){
         cout<<"Heap not created!!"<<endl;
         return;
@@ -127,24 +131,24 @@ void Heap::resizeHeap(Heap* h){
     delete(old_arr);
 }
 
-void Heap::buildHeap(Heap* h, int a[], int n){
+void Heap::buildHeap(Heap* h, int a[], int n){      // method to build the original heap
     if(h == nullptr)
         return;
 
-    while(n>h->capacity)
-        resizeHeap(h);
+    while(n>h->capacity)    // if size is larger than the capacity
+        resizeHeap(h);          // method to resize the capacity of the heap
 
-    for(int i=0; i<n; i++)
+    for(int i=0; i<n; i++)      // copy the array to the instance of the current object
         h->array[i] = a[i];
 
-    h->size = n;
-    int startInd = (h->size / 2) - 1;
+    h->size = n;        // set the size in the object of heap
+    int startInd = (h->size / 2) - 1;     // start index will be the last non leaf node in the array
 
-    for(int i=startInd; i>=0; i--)
-        percolateDown(h,i);
+    for(int i=startInd; i>=0; i--)     // loop starting from last non leaf node to the root(bottom-top)
+        percolateDown(h,i);  // method to heapify each root node with correspondense to its child nodes
 }
 
-void Heap::showHeap(Heap* h){
+void Heap::showHeap(Heap* h){   // method to display the heapified array
     if(h == nullptr){
         cout<<"No heap found"<<endl;
         return;
