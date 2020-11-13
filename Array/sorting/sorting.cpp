@@ -115,8 +115,73 @@ void insertion(){
 
 }
 
+int partioning(int arr[], int lower, int upper){
+    // This method will be responsible for partioning the array
+
+    // left will move towards the end of the list and right will move towards the pivot element
+    int left = lower, right = upper; 
+
+    int pivot = arr[lower];    // will set the first element as pivot
+
+    while(left < right){    // will repeat the following while left is less than right
+
+        // we will increement left if the elements are less than pivot(since we need to find element greater than pivot inorder to swap left with right)
+
+        while(arr[left] <= pivot) 
+            left++;
+
+        // we will increement left if the elements are less than pivot(since we need to find element greater than pivot inorder to swap left with right)
+
+        while(arr[right] > pivot)
+            right--;
+
+        // if left and right hasn't crossed each other yet!, then swap elements of left and right
+
+        if(left < right)
+            swap(arr[left], arr[right]);
+
+    }
+
+    // After left and right are at same position or crossed each other, we will move the pivot element with index in which right is at and the element at right will go to the position of pivot.
+
+    arr[lower] = arr[right];
+    arr[right] = pivot;
+
+    // Since this method returns the partioning position(where pivot element is present) we will return right, because thats where pivot element is present.
+    return right;
+}
+
+void quickSort(int arr[], int lower, int upper){
+    // This function will take the array and the lower and upper bound of the array
+
+    int pi; // This is the memory allocated for partioning index
+
+    if(lower < upper){  // will execute the following code only when lower is less than upper
+
+        pi = partioning(arr, lower, upper);    // will partion the array
+        quickSort(arr, lower, pi-1);          // performing quickSort on first partition(pi sorted)
+        quickSort(arr, pi+1, upper);         // performing quickSort on second partition(pi sorted)
+    }
+}
+
 void quick(){
-    
+    int n;
+
+    cout<<"Enter the size of the array: "<<endl;
+    cin>>n;
+
+    int* arr = createArray(n);
+
+    // Now perfoming Quick sort ---
+
+    quickSort(arr, 0, n-1);
+
+    // Now printing the array after performing the sorting opertion---
+
+    cout<<"Your array after performing Quick Sort is: "<<endl;
+
+    printArray(arr, n);
+
 }
 
 int main(){
@@ -155,6 +220,5 @@ int main(){
     }while (op != 7);
 
     return 0;
-    
 
 }
