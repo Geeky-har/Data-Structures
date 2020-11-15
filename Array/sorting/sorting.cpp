@@ -184,6 +184,87 @@ void quick(){
 
 }
 
+void merge(int arr[], int lower, int mid, int upper){
+    int i, j, k;
+    i = lower;  // i will start from the first index of partition 1
+    j = mid + 1;    // j will start from the first index of partition 2
+    k = lower;  // k will start from the first index of the auxiliary array
+
+    int* aux = new int[upper+1];    // auxiliary array where we will store the sorted elements
+
+    // will iterate until either of the two partition ran out of elements
+
+    while(i <= mid && j <= upper){
+
+        if(arr[i] < arr[j]){    // if element of first partition is smaller
+            aux[k] = arr[i];    // store that element in the auxiliary array
+            i++;                // increement the pointer of array of first partition
+        }
+
+        else{   // if element of second partition is smaller
+            aux[k] = arr[j];    // store that element in the auxiliary array
+            j++;    // increement the pointer of array of second partition
+        }
+
+        k++;    // after storing the element will increase the pointer of the auxiliary
+    }
+
+    // if elements in the first partition are left will store rest of the elements in the auxiliary array
+
+    while(i <= mid){
+        aux[k] = arr[i];
+        k++;
+        i++;
+    }
+
+    // if elements in the second partition are left will store rest of the elements in the auxiliary array
+
+    while(j <= upper){
+        aux[k] = arr[j];
+        j++;
+        k++;
+    }
+
+    // Now our auxiliary array have the sorted elements, now we will copy elements of aux array to original array
+
+    for (int i = lower; i <= upper; i++)
+    {
+        arr[i] = aux[i];
+    }
+    
+}
+
+void mergeSort(int arr[], int lower, int upper){
+
+    // Will execute the code if lower is less than upper(means atleast two elements)
+
+    if(lower < upper){
+        int mid = (lower + upper) / 2;  // will determine mid of the array
+        mergeSort(arr, lower, mid);     // partition the array from lower to mid (1st partition)
+        mergeSort(arr, mid+1, upper);   // partition the array from mid+1 to upper (2nd partition)
+        merge(arr, lower, mid, upper);  // perform merging of the partitions made above
+    }
+}
+
+void ms(){
+    int n;
+
+    cout<<"Enter the size of the array: "<<endl;
+    cin>>n;
+
+    int* arr = createArray(n);
+
+    // Now perfoming Merge sort ---
+
+    mergeSort(arr, 0, n-1);
+
+    // Now printing the array after performing the sorting opertion---
+
+    cout<<"Your array after performing Merge Sort is: "<<endl;
+
+    printArray(arr, n);
+}
+
 int main(){
     int op;
 
@@ -216,7 +297,12 @@ int main(){
             case 4:
                 quick();
                 break;
+
+            case 5:
+                ms();
+                break;
         }
+
     }while (op != 7);
 
     return 0;
