@@ -265,6 +265,72 @@ void ms(){
     printArray(arr, n);
 }
 
+int findMaxElement(int arr[], int n){
+    int max = arr[0];
+
+    for(int i=1; i < n; ++i){
+        if(arr[i] > max){
+            max = arr[i];
+        }
+    }
+
+    return max;
+}
+
+void countSort(){
+    int n, i, j=0;
+
+    cout<<"Enter the size of the array: "<<endl;
+    cin>>n;
+
+    int* arr = createArray(n);
+
+    // Now perfoming Count sort ---
+
+    int max = findMaxElement(arr, n);   // first we will find maximum value in the given array
+
+    // Now we will create an auxiliary array of size max+1
+
+    int* aux = new int[max+1];
+
+    // Initialize the aux array with zeros
+
+    for (i = 0; i <= max; i++)
+    {
+        aux[i] = 0;
+    }
+
+    // Now in the given array(to be sorted) the elements will act as index value in the auxiliary array and in that particular index we will increement the value present at that index
+
+    for (i = 0; i < n; i++)
+    {
+        aux[arr[i]]++;
+    }
+
+    i = 0;
+
+    // Now we will traverse the aux array and whenever we will encounter a non zero element, we will decremeent it and append the index value in the given array
+
+    while(i <= max){
+        if(aux[i] > 0){
+            arr[j] = i;
+            aux[i]--;
+            j++;
+        }
+
+        else{
+            i++;
+        }
+    }
+    
+    // Now printing the array after performing the sorting opertion---
+
+    cout<<"Your array after performing Count Sort is: "<<endl;
+
+    printArray(arr, n);
+    
+}
+
 int main(){
     int op;
 
@@ -277,7 +343,7 @@ int main(){
         cout<<"3. For Insertion Sort"<<endl;
         cout<<"4. For Quick Sort"<<endl;
         cout<<"5. For Merge Sort"<<endl;
-        cout<<"6. For Shell Sort"<<endl;
+        cout<<"6. For Count Sort"<<endl;
         cout<<"7. Exit"<<endl;
         cin>>op;
 
@@ -300,6 +366,10 @@ int main(){
 
             case 5:
                 ms();
+                break;
+
+            case 6:
+                countSort();
                 break;
         }
 
