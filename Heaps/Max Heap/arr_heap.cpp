@@ -19,6 +19,7 @@ class Heap{
         void resizeHeap(Heap*);
         void buildHeap(Heap*, int[], int);
         void showHeap(Heap*);
+        void heapSort(Heap*);
 };
 
 Heap* Heap::createHeap(){   // Method for heap creation( TC: O(n) )
@@ -80,7 +81,6 @@ int Heap::rightChild(Heap* h, int i){       // method to get the right child ind
 
 int Heap::maxElement(Heap* h){
     if(h == nullptr){
-        cout<<"Heap Not Found!"<<endl;
         return -1;
     }
 
@@ -146,6 +146,8 @@ void Heap::buildHeap(Heap* h, int a[], int n){      // method to build the origi
 
     for(int i=startInd; i>=0; i--)     // loop starting from last non leaf node to the root(bottom-top)
         percolateDown(h,i);  // method to heapify each root node with correspondense to its child nodes
+
+    cout<<"Your heap is created successfully!!"<<endl;
 }
 
 void Heap::showHeap(Heap* h){   // method to display the heapified array
@@ -163,6 +165,36 @@ void Heap::showHeap(Heap* h){   // method to display the heapified array
 
 }
 
+void Heap:: heapSort(Heap* h){    // Heap Sort Time Complexity: O(n log n)
+    if(h == nullptr){
+        cout<<"Heap not found! Create Heap first!"<<endl;
+        return;
+    }
+
+    int n = h->size;
+    int old_size = h->size;    // We will store the original size of our array in a seperate var
+
+    // Will iterate in the array, equal to the number of elements - 1
+
+    for(int i = n - 1; i > 0; --i){
+        // will swap the first and last element in the heap
+
+        swap(h->array[0], h->array[h->size - 1]);
+
+        // after swapping we will decreement the size of the array(because the last element in the array are arranged in a sorted order
+
+        h->size--;
+
+        // after that we will again heapify the array
+        percolateDown(h, 0);
+
+    }
+
+    h->size = old_size; // after sorting we will adjust the size of the array with its original size
+
+    cout<<"Heap Sort performed in the array!!"<<endl;
+}
+
 int main(){
     int op;
     Heap h;
@@ -174,7 +206,9 @@ int main(){
         cout<<"1. To create a heap"<<endl;
         cout<<"2. To build a heap"<<endl;
         cout<<"3. To display the heap"<<endl;
-        cout<<"4. Exit"<<endl;
+        cout<<"4. To display the largest element in the heap"<<endl;
+        cout<<"5. To perform Heap Sort operation in the array"<<endl;
+        cout<<"6. Exit"<<endl;
         cin>>op;
 
         switch(op){
@@ -206,8 +240,24 @@ int main(){
                 break;
             }
 
+            case 4:
+                if(h.maxElement(heap) != -1){
+                    int largest = h.maxElement(heap);
+
+                    cout<<"The largest element in the heap is: "<<largest<<endl;
+                }
+                
+                else{
+                    cout<<"Heap Not Found!"<<endl;
+                }
+                break;
+
+            case 5:
+                h.heapSort(heap);
+                break;
+                
         }
-    }while(op != 4);
+    }while(op != 6);
 
     return 0;
 
