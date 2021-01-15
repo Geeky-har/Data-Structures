@@ -17,6 +17,8 @@ public:
 	void pop(ArrayStack *);
 	void printStack(ArrayStack *);
 	void printTop(ArrayStack *);
+	void peek(ArrayStack *);
+	void totalNoElements(ArrayStack *);
 };
 
 ArrayStack *ArrayStack::CreateStack()
@@ -120,6 +122,42 @@ void ArrayStack::printTop(ArrayStack* stack){
 	}
 }
 
+void ArrayStack::peek(ArrayStack* stack){
+
+	if(isEmpty(stack))
+		cout<<"Your Stack is empty"<<endl;
+
+	else{
+		int n;
+
+		cout<<"Enter the position of the element(from 0 to n-1)"<<endl;
+		cin>>n;
+
+		if( ( n > stack->top || n < 0 ) )
+			cout<<"Invalid Input"<<endl;
+		
+		else
+			cout<<"The element at "<<n<<"th position is "<<stack->array[n]<<endl;
+		
+	}
+}
+
+void ArrayStack::totalNoElements(ArrayStack* stack){
+
+	if(isEmpty(stack)){
+		cout<<"Your Stack is empty"<<endl;
+	}
+
+	else{
+		int count=0;
+
+		for(int i=0; i <= stack->top; i++)
+			count++;
+
+		cout<<"The total number of elements in the stack are: "<<count<<endl;
+	}
+}
+
 int main()
 {
 	int option;
@@ -135,7 +173,9 @@ int main()
 		cout << "3. To perform pop operation" << endl;
 		cout << "4. To print the stack elements" << endl;
 		cout << "5. To get the top element" << endl;
-		cout << "6. Exit" << endl;
+		cout << "6. To get a particular element in the stack(peek)" << endl;
+		cout << "7. To get the total number of elements in the stack" << endl;
+		cout << "8. Exit" << endl;
 
 		cin >> option;
 
@@ -160,9 +200,17 @@ int main()
 		case 5:
 			obj.printTop(stack); // prints the element at the top
 			break;
+
+		case 6:
+			obj.peek(stack);
+			break;
+
+		case 7:
+			obj.totalNoElements(stack);
+			break;
 		}
 
-	} while (option != 6);
+	} while (option != 8);
 
 	return 0;
 }
